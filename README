@@ -1,0 +1,54 @@
+I’ll demonstrate a simple UNIX (Linux/MacOS/etc) socket program that uses sockets to create a chat 
+between a client and server. Before you read further into this, I recommend reading up on  socket programming 
+and a bit on the layers of the internet for background. As this program uses UNIX system calls, again, its best to 
+have background on that as well.
+
+Essentially, this program will be a mock instant messaging program that will communicate over TCP using sockets. 
+The client will connect to the server through an IP address specified. The server will listen for up to 5 requests 
+at a time. Afterwards, the server will accept the request to connect from a client and messages will be sent back and 
+forth through a buffer. Should either the client or server decide to stop, at the end we close the sockets and 
+terminate the program.
+
+How to run this...
+
+In a terminal compile and execute the server code.
+
+    Clays-MBP:Client-Server claybogusky$ g++ server.cpp
+    Clays-MBP:Client-Server claybogusky$ mv a.out server
+    Clays-MBP:Client-Server claybogusky$ ./server 12345
+    Waiting for a client to connect...
+    Connected with client!
+    Awaiting client response...
+    Client: Hello SERVER!
+    >Hello CLIENT!
+    Awaiting client response...
+    Client: Live Long And Prosper!
+    >You too!
+    Awaiting client response...
+    Client has quit the session
+    ********Session********
+    Bytes written: 21 Bytes read: 39
+    Elapsed time: 230 secs
+    Connection closed...
+    Clays-MBP:Client-Server claybogusky$ 
+
+
+In a SEPARATE terminal compile and execute the client code.
+
+    Clays-MBP:Client-Server claybogusky$ g++ client.cpp
+    Clays-MBP:Client-Server claybogusky$ mv a.out client
+    Clays-MBP:Client-Server claybogusky$ ./client 127.0.0.1 12345
+    Connected to the server!
+    >Hello SERVER!
+    Awaiting server response...
+    Server: Hello CLIENT!
+    >Live Long And Prosper!
+    Awaiting server response...
+    Server: You too!
+    >>exit
+    ********Session********
+    Bytes written: 35 Bytes read: 32781
+    Elapsed time: 230 secs
+    Connection closed
+    Clays-MBP:Client-Server claybogusky$ 
+
